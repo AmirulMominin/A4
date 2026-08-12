@@ -1,0 +1,18 @@
+model Properties {
+    id String @id @default(uuid())
+    details String
+    rent String
+    status PropertyStatus @default(AVAILABLE)
+    postedUserId String @unique
+    user User @relation(fields: [postedUserId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+
+}
+
+enum PropertyStatus {
+    RENTED
+    AVAILABLE
+}
