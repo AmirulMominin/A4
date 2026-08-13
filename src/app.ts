@@ -3,6 +3,7 @@ import { json } from "node:stream/consumers"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import config from "./config"
+import { authRoute } from "./modules/auth/auth.route"
 
 
 
@@ -19,6 +20,7 @@ app.use(cors({
     credentials: true
 }))
 
+app.use('/api/auth', authRoute)
 
 
 

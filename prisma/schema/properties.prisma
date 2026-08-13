@@ -3,8 +3,11 @@ model Properties {
     details String
     rent String
     status PropertyStatus @default(AVAILABLE)
-    postedUserId String @unique
-    user User @relation(fields: [postedUserId], references: [id], onDelete: Cascade)
+    landlordId String @unique
+    landlord User @relation(fields: [landlordId], references: [id], onDelete: Cascade)
+
+    
+
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
