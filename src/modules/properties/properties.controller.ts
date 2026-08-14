@@ -3,7 +3,8 @@ import { sendResponse } from "../../utils/sendResponse";
 import { propertiesService } from "./properties.service";
 
 const getAllProperties = catchAsync(async(req, res, next)=>{
-    const properties = await propertiesService.getAllProperties()
+    const properties = await propertiesService.getAllProperties(req.query)
+    // console.log("line 7",req.query)
     sendResponse(res, {
         success: true,
         statusCode: 200,
