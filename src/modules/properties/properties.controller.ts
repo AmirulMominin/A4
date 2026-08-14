@@ -6,7 +6,7 @@ const getAllProperties = catchAsync(async(req, res, next)=>{
     const properties = await propertiesService.getAllProperties()
     sendResponse(res, {
         success: true,
-        statusCoode: 200,
+        statusCode: 200,
         message: "Here is all the properties",
         data: properties
     })
@@ -20,6 +20,8 @@ const getAllCategory = catchAsync(async(req, res, next)=>{
         message: "All the category",
         data: data
     })
+   
+  
 })
 
 
@@ -34,8 +36,11 @@ const getPropertiesById = catchAsync(async(req, res, next)=>{
     })
 })
 
+
+
 export const propertiesController = {
     getAllCategory,
     getAllProperties,
-    getPropertiesById
+    getPropertiesById,
+    
 }

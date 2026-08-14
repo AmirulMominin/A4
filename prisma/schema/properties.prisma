@@ -2,8 +2,9 @@ model Properties {
     id String @id @default(uuid())
     name String
     details String
-    rent Decimal
+    rent Decimal @db.Decimal(10, 2)
     type PropertyType
+    location String
     status PropertyStatus @default(AVAILABLE)
     landlordId String 
     landlord User @relation(fields: [landlordId], references: [id])

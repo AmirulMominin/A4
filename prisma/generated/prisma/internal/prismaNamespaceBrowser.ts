@@ -89,6 +89,7 @@ export const PropertiesScalarFieldEnum = {
   details: 'details',
   rent: 'rent',
   type: 'type',
+  location: 'location',
   status: 'status',
   landlordId: 'landlordId',
   categoryId: 'categoryId',

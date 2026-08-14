@@ -7,7 +7,7 @@ import { userInfo } from "node:os";
 import { landloardService } from "./landloard.service";
 
 const createProperties = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
-    console.log("line 11",req.user)
+    
     if(!req.user){
         throw new Error("user is not authneticated! ")
     }
