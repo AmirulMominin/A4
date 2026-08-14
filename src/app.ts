@@ -6,6 +6,7 @@ import config from "./config"
 import { authRoute } from "./modules/auth/auth.route"
 import { landloardRoute } from "./modules/landloard/landloard.route"
 import { propertiesRoute } from "./modules/properties/properties.route"
+import { rentalRoute } from "./modules/rental/rental.route"
 
 
 
@@ -26,6 +27,7 @@ app.use(cors({
 app.use('/api/auth', authRoute)
 app.use('/api/landlord', landloardRoute)
 app.use('/api/properties', propertiesRoute)
+app.use('/api/rentals', rentalRoute)
 
 
 

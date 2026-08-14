@@ -27,6 +27,16 @@ export const PropertyType = {
 export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType]
 
 
+export const RentalStatus = {
+  PENDING: 'PENDING',
+  REJECTED: 'REJECTED',
+  ACCEPTED: 'ACCEPTED',
+  ACTIVE: 'ACTIVE'
+} as const
+
+export type RentalStatus = (typeof RentalStatus)[keyof typeof RentalStatus]
+
+
 export const Role = {
   Tenant: 'Tenant',
   Landlord: 'Landlord',

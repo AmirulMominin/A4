@@ -11,6 +11,7 @@ model User{
 
     
     properties Properties[]
+    rental Rental[]
 
     @@map("users")
 }

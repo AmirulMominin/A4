@@ -12,7 +12,7 @@ model Properties {
     categoryId String
     category Category @relation(fields: [categoryId], references: [id])
     
-    
+    rental Rental[]
 
 
     createdAt DateTime @default(now())

@@ -10,5 +10,6 @@
  */
 export type * from './models/Category'
 export type * from './models/Properties'
+export type * from './models/Rental'
 export type * from './models/User'
 export type * from './commonInputTypes'

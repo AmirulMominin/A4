@@ -266,6 +266,7 @@ export type PropertiesWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Properties"> | Date | string
   landlord?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
+  rental?: Prisma.RentalListRelationFilter
 }
 
 export type PropertiesOrderByWithRelationInput = {
@@ -282,6 +283,7 @@ export type PropertiesOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   landlord?: Prisma.UserOrderByWithRelationInput
   category?: Prisma.CategoryOrderByWithRelationInput
+  rental?: Prisma.RentalOrderByRelationAggregateInput
 }
 
 export type PropertiesWhereUniqueInput = Prisma.AtLeast<{
@@ -301,6 +303,7 @@ export type PropertiesWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Properties"> | Date | string
   landlord?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
+  rental?: Prisma.RentalListRelationFilter
 }, "id">
 
 export type PropertiesOrderByWithAggregationInput = {
@@ -351,6 +354,7 @@ export type PropertiesCreateInput = {
   updatedAt?: Date | string
   landlord: Prisma.UserCreateNestedOneWithoutPropertiesInput
   category: Prisma.CategoryCreateNestedOneWithoutPropertyInput
+  rental?: Prisma.RentalCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertiesUncheckedCreateInput = {
@@ -365,6 +369,7 @@ export type PropertiesUncheckedCreateInput = {
   categoryId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  rental?: Prisma.RentalUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertiesUpdateInput = {
@@ -379,6 +384,7 @@ export type PropertiesUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   landlord?: Prisma.UserUpdateOneRequiredWithoutPropertiesNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutPropertyNestedInput
+  rental?: Prisma.RentalUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertiesUncheckedUpdateInput = {
@@ -393,6 +399,7 @@ export type PropertiesUncheckedUpdateInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rental?: Prisma.RentalUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertiesCreateManyInput = {
@@ -495,6 +502,11 @@ export type PropertiesSumOrderByAggregateInput = {
   rent?: Prisma.SortOrder
 }
 
+export type PropertiesScalarRelationFilter = {
+  is?: Prisma.PropertiesWhereInput
+  isNot?: Prisma.PropertiesWhereInput
+}
+
 export type PropertiesCreateNestedManyWithoutCategoryInput = {
   create?: Prisma.XOR<Prisma.PropertiesCreateWithoutCategoryInput, Prisma.PropertiesUncheckedCreateWithoutCategoryInput> | Prisma.PropertiesCreateWithoutCategoryInput[] | Prisma.PropertiesUncheckedCreateWithoutCategoryInput[]
   connectOrCreate?: Prisma.PropertiesCreateOrConnectWithoutCategoryInput | Prisma.PropertiesCreateOrConnectWithoutCategoryInput[]
@@ -553,6 +565,20 @@ export type EnumPropertyStatusFieldUpdateOperationsInput = {
   set?: $Enums.PropertyStatus
 }
 
+export type PropertiesCreateNestedOneWithoutRentalInput = {
+  create?: Prisma.XOR<Prisma.PropertiesCreateWithoutRentalInput, Prisma.PropertiesUncheckedCreateWithoutRentalInput>
+  connectOrCreate?: Prisma.PropertiesCreateOrConnectWithoutRentalInput
+  connect?: Prisma.PropertiesWhereUniqueInput
+}
+
+export type PropertiesUpdateOneRequiredWithoutRentalNestedInput = {
+  create?: Prisma.XOR<Prisma.PropertiesCreateWithoutRentalInput, Prisma.PropertiesUncheckedCreateWithoutRentalInput>
+  connectOrCreate?: Prisma.PropertiesCreateOrConnectWithoutRentalInput
+  upsert?: Prisma.PropertiesUpsertWithoutRentalInput
+  connect?: Prisma.PropertiesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PropertiesUpdateToOneWithWhereWithoutRentalInput, Prisma.PropertiesUpdateWithoutRentalInput>, Prisma.PropertiesUncheckedUpdateWithoutRentalInput>
+}
+
 export type PropertiesCreateNestedManyWithoutLandlordInput = {
   create?: Prisma.XOR<Prisma.PropertiesCreateWithoutLandlordInput, Prisma.PropertiesUncheckedCreateWithoutLandlordInput> | Prisma.PropertiesCreateWithoutLandlordInput[] | Prisma.PropertiesUncheckedCreateWithoutLandlordInput[]
   connectOrCreate?: Prisma.PropertiesCreateOrConnectWithoutLandlordInput | Prisma.PropertiesCreateOrConnectWithoutLandlordInput[]
@@ -606,6 +632,7 @@ export type PropertiesCreateWithoutCategoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   landlord: Prisma.UserCreateNestedOneWithoutPropertiesInput
+  rental?: Prisma.RentalCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertiesUncheckedCreateWithoutCategoryInput = {
@@ -619,6 +646,7 @@ export type PropertiesUncheckedCreateWithoutCategoryInput = {
   landlordId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  rental?: Prisma.RentalUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertiesCreateOrConnectWithoutCategoryInput = {
@@ -664,6 +692,78 @@ export type PropertiesScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Properties"> | Date | string
 }
 
+export type PropertiesCreateWithoutRentalInput = {
+  id?: string
+  name: string
+  details: string
+  rent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  type: $Enums.PropertyType
+  location: string
+  status?: $Enums.PropertyStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  landlord: Prisma.UserCreateNestedOneWithoutPropertiesInput
+  category: Prisma.CategoryCreateNestedOneWithoutPropertyInput
+}
+
+export type PropertiesUncheckedCreateWithoutRentalInput = {
+  id?: string
+  name: string
+  details: string
+  rent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  type: $Enums.PropertyType
+  location: string
+  status?: $Enums.PropertyStatus
+  landlordId: string
+  categoryId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PropertiesCreateOrConnectWithoutRentalInput = {
+  where: Prisma.PropertiesWhereUniqueInput
+  create: Prisma.XOR<Prisma.PropertiesCreateWithoutRentalInput, Prisma.PropertiesUncheckedCreateWithoutRentalInput>
+}
+
+export type PropertiesUpsertWithoutRentalInput = {
+  update: Prisma.XOR<Prisma.PropertiesUpdateWithoutRentalInput, Prisma.PropertiesUncheckedUpdateWithoutRentalInput>
+  create: Prisma.XOR<Prisma.PropertiesCreateWithoutRentalInput, Prisma.PropertiesUncheckedCreateWithoutRentalInput>
+  where?: Prisma.PropertiesWhereInput
+}
+
+export type PropertiesUpdateToOneWithWhereWithoutRentalInput = {
+  where?: Prisma.PropertiesWhereInput
+  data: Prisma.XOR<Prisma.PropertiesUpdateWithoutRentalInput, Prisma.PropertiesUncheckedUpdateWithoutRentalInput>
+}
+
+export type PropertiesUpdateWithoutRentalInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  details?: Prisma.StringFieldUpdateOperationsInput | string
+  rent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  type?: Prisma.EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  landlord?: Prisma.UserUpdateOneRequiredWithoutPropertiesNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutPropertyNestedInput
+}
+
+export type PropertiesUncheckedUpdateWithoutRentalInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  details?: Prisma.StringFieldUpdateOperationsInput | string
+  rent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  type?: Prisma.EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
+  landlordId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type PropertiesCreateWithoutLandlordInput = {
   id?: string
   name: string
@@ -675,6 +775,7 @@ export type PropertiesCreateWithoutLandlordInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutPropertyInput
+  rental?: Prisma.RentalCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertiesUncheckedCreateWithoutLandlordInput = {
@@ -688,6 +789,7 @@ export type PropertiesUncheckedCreateWithoutLandlordInput = {
   categoryId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  rental?: Prisma.RentalUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertiesCreateOrConnectWithoutLandlordInput = {
@@ -740,6 +842,7 @@ export type PropertiesUpdateWithoutCategoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   landlord?: Prisma.UserUpdateOneRequiredWithoutPropertiesNestedInput
+  rental?: Prisma.RentalUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertiesUncheckedUpdateWithoutCategoryInput = {
@@ -753,6 +856,7 @@ export type PropertiesUncheckedUpdateWithoutCategoryInput = {
   landlordId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rental?: Prisma.RentalUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertiesUncheckedUpdateManyWithoutCategoryInput = {
@@ -792,6 +896,7 @@ export type PropertiesUpdateWithoutLandlordInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutPropertyNestedInput
+  rental?: Prisma.RentalUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertiesUncheckedUpdateWithoutLandlordInput = {
@@ -805,6 +910,7 @@ export type PropertiesUncheckedUpdateWithoutLandlordInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rental?: Prisma.RentalUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertiesUncheckedUpdateManyWithoutLandlordInput = {
@@ -821,6 +927,35 @@ export type PropertiesUncheckedUpdateManyWithoutLandlordInput = {
 }
 
 
+/**
+ * Count Type PropertiesCountOutputType
+ */
+
+export type PropertiesCountOutputType = {
+  rental: number
+}
+
+export type PropertiesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  rental?: boolean | PropertiesCountOutputTypeCountRentalArgs
+}
+
+/**
+ * PropertiesCountOutputType without action
+ */
+export type PropertiesCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PropertiesCountOutputType
+   */
+  select?: Prisma.PropertiesCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PropertiesCountOutputType without action
+ */
+export type PropertiesCountOutputTypeCountRentalArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RentalWhereInput
+}
+
 
 export type PropertiesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -836,6 +971,8 @@ export type PropertiesSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   updatedAt?: boolean
   landlord?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  rental?: boolean | Prisma.Properties$rentalArgs<ExtArgs>
+  _count?: boolean | Prisma.PropertiesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["properties"]>
 
 export type PropertiesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -888,6 +1025,8 @@ export type PropertiesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type PropertiesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   landlord?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  rental?: boolean | Prisma.Properties$rentalArgs<ExtArgs>
+  _count?: boolean | Prisma.PropertiesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PropertiesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   landlord?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -903,6 +1042,7 @@ export type $PropertiesPayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     landlord: Prisma.$UserPayload<ExtArgs>
     category: Prisma.$CategoryPayload<ExtArgs>
+    rental: Prisma.$RentalPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1312,6 +1452,7 @@ export interface Prisma__PropertiesClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   landlord<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  rental<T extends Prisma.Properties$rentalArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Properties$rentalArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RentalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1750,6 +1891,30 @@ export type PropertiesDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many Properties to delete.
    */
   limit?: number
+}
+
+/**
+ * Properties.rental
+ */
+export type Properties$rentalArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Rental
+   */
+  select?: Prisma.RentalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Rental
+   */
+  omit?: Prisma.RentalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RentalInclude<ExtArgs> | null
+  where?: Prisma.RentalWhereInput
+  orderBy?: Prisma.RentalOrderByWithRelationInput | Prisma.RentalOrderByWithRelationInput[]
+  cursor?: Prisma.RentalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RentalScalarFieldEnum | Prisma.RentalScalarFieldEnum[]
 }
 
 /**
