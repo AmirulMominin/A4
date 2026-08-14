@@ -63,8 +63,29 @@ const deleteProperties = async(pid: string, uid: string)=>{
     return data
 }
 
+const getAllRequest = async(id :string)=>{
+    const data = await prisma.rental.findMany({
+        where:{
+            property: {
+                landlordId: id
+            }
+        },
+        include:{
+            property: true,
+            tenant: {
+                omit:{
+                    password: true
+                }
+            }
+        }
+    
+    })
+    return data
+}
+
 export const landloardService = {
     createProperties,
     updateProperties,
-    deleteProperties
+    deleteProperties,
+    getAllRequest
 }

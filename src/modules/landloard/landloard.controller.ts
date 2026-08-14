@@ -55,8 +55,21 @@ const deleteProperties = catchAsync(async(req, res, next)=>{
     })
 })
 
+const viewAllRequest = catchAsync(async(req, res, next)=>{
+    console.log("line 59")
+    const id = req.user?.id
+    const data = await landloardService.getAllRequest(id as string)
+    sendResponse(res, {
+        success: true,
+        statusCode: 200,
+        message: "Here is all the data",
+        data: data
+    })
+})
+
 export const landloardController = {
     createProperties,
     updateProperties,
-    deleteProperties
+    deleteProperties,
+    viewAllRequest
 }

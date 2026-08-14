@@ -5,21 +5,10 @@ import { catchAsync } from "../utils/catchAsync";
 import jwt, { JwtPayload } from "jsonwebtoken"
 
 
-// declare global {
-//     namespace Express {
-//         interface Request {
-//             user?: {
-//                 email: string;
-//                 name: string;
-//                 id: string;
-//                 role: Role;
-//             }
-//         }
-//     }
-// }
 
 
-const auth = (...role: string[]) =>{
+const auth = (...roles: string[]) =>{
+
     return catchAsync(async(req, res, next)=>{
         const accessToken = req.cookies.accessToken
 
@@ -38,8 +27,8 @@ const auth = (...role: string[]) =>{
             throw new Error("This user is not found")
         }
        
-        if(!role.length && role.includes(role)){
-            throw new Error("You are not allowed to visit this link")
+        if (roles.length && !roles.includes(role)) {
+        throw new Error("You are not allowed to visit this link");
         }
 
         req.user = {

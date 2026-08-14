@@ -6,8 +6,10 @@ import { landloardController } from "./landloard.controller";
 const router = Router()
 
 router.post('/properties',auth(Role.Landlord), landloardController.createProperties)
+router.get('/properties/requests', auth(Role.Landlord), landloardController.viewAllRequest)
 router.put('/properties/:id', auth(Role.Landlord), landloardController.updateProperties)
 router.delete('/properties/:id', auth(Role.Landlord), landloardController.deleteProperties)
+
 
 
 
