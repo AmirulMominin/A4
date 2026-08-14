@@ -5,6 +5,7 @@ import { sendResponse } from "../../utils/sendResponse";
 import httpStatus  from "http-status";
 import { userInfo } from "node:os";
 import { landloardService } from "./landloard.service";
+import { RentalStatus } from "../../../prisma/generated/prisma/enums";
 
 const createProperties = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
     
@@ -56,7 +57,6 @@ const deleteProperties = catchAsync(async(req, res, next)=>{
 })
 
 const viewAllRequest = catchAsync(async(req, res, next)=>{
-    console.log("line 59")
     const id = req.user?.id
     const data = await landloardService.getAllRequest(id as string)
     sendResponse(res, {
@@ -67,9 +67,29 @@ const viewAllRequest = catchAsync(async(req, res, next)=>{
     })
 })
 
+const requestProcess = catchAsync(async(req, res, next)=>{
+    const {status} = req.body
+    
+    const id = req.params.id
+    const lid = req.user?.id
+
+    if(!["ACCEPTED", "REJECTED"].includes(status)){
+        throw new Error("Invalid status input.")
+    }
+
+    const data = await landloardService.requestProcess(status, id as string, lid as string)
+    sendResponse(res, {
+        success: true,
+        statusCode: 200,
+        message: "message updated",
+        data: data
+    })
+})
+
 export const landloardController = {
     createProperties,
     updateProperties,
     deleteProperties,
-    viewAllRequest
+    viewAllRequest,
+    requestProcess
 }

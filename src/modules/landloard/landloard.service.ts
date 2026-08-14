@@ -1,5 +1,7 @@
+
 import { prisma } from "../../lib/prisma";
 import { IProperties } from "./landloard.interface";
+import { RentalStatus } from "../../../prisma/generated/prisma/enums";
 
 const createProperties = async(payLoad: IProperties, id: string) =>{
     const propertiesPost = await prisma.properties.create({
@@ -83,9 +85,41 @@ const getAllRequest = async(id :string)=>{
     return data
 }
 
+
+const requestProcess = async(status: string, id: string, lid: string)=>{
+
+    const property = await prisma.rental.findFirst({
+        where:{
+            id,
+            property:{
+                landlordId: lid
+            }
+        }
+    })
+    if(!property){
+        throw new Error("rental request not found or you are not authorized to make this change")
+    }
+
+    if(property.rentalStatus !== "PENDING"){
+        throw new Error("Only pending status can be change")
+    }
+
+    const data = await prisma.rental.update({
+        where:{
+            id
+        },
+        data:{
+            rentalStatus: status as RentalStatus
+        }
+    })
+
+
+}
+
 export const landloardService = {
     createProperties,
     updateProperties,
     deleteProperties,
-    getAllRequest
+    getAllRequest,
+    requestProcess
 }
