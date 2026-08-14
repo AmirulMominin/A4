@@ -1,70 +1,31 @@
-import { prisma } from "../../lib/prisma";
-import { IProperties } from "./properties.interface";
+import { prisma } from "../../lib/prisma"
 
-const createProperties = async(payLoad: IProperties, id: string) =>{
-    const propertiesPost = await prisma.properties.create({
-        data: {
-            ...payLoad,landlordId:id
-        }
-    })
-
-    return propertiesPost
+const getAllProperties =  async()=>{
+    const properties = await prisma.properties.findMany({})
+    return properties
 }
 
-
-const updateProperties = async(payLoad: any, uid: string, pid: string) =>{
-    console.log("line 16",payLoad)
-    const user = await prisma.user.findUniqueOrThrow({
+const getPropertiesById = async(id: string)=>{
+    const data = await prisma.properties.findUnique({
         where:{
-            id: uid
-        }
-    })
-    if(!user){
-        throw new Error("No user found")
-    }
-    const properties = await prisma.properties.findUniqueOrThrow({
-        where:{
-            id: pid,
-            landlordId: uid
+            id
         }
     })
 
-    if(!properties){
-        throw new Error("You are not the owner")
-    }
-
-    const data = await prisma.properties.update({
-        where:{
-            id: pid
-        },
-        data:
-            payLoad
-        
-    })
     return data
 }
 
-const deleteProperties = async(pid: string, uid: string)=>{
-    const properties = await prisma.properties.findUnique({
-        where:{
-            id: pid,
-            landlordId: uid
+const getAllCategory = async () =>{
+    const category = await prisma.category.findMany({
+        select:{
+            name: true
         }
     })
-
-    if(!properties){
-        throw new Error("You are not the owner of this properties. So you can not delete this")
-    }
-    const data = await prisma.properties.delete({
-        where:{
-            id: pid
-        }
-    })
-    return data
+    return category
 }
 
 export const propertiesService = {
-    createProperties,
-    updateProperties,
-    deleteProperties
+    getAllProperties,
+    getAllCategory,
+    getPropertiesById
 }
