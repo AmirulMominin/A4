@@ -10,7 +10,7 @@ model User{
     updatedAt DateTime @updatedAt
 
     
-    properties Properties?
+    properties Properties[]
 
     @@map("users")
 }

@@ -1,3 +1,4 @@
+
 import app from "./app"
 import config from "./config"
 import { prisma } from "./lib/prisma"
@@ -5,6 +6,7 @@ import { prisma } from "./lib/prisma"
 
 async function main(){
     try {
+        
         await prisma.$connect()
         console.log("Database Connected")
         app.listen(config.port, ()=>{

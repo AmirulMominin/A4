@@ -4,6 +4,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import config from "./config"
 import { authRoute } from "./modules/auth/auth.route"
+import { propertiesRouter } from "./modules/properties/properties.route"
 
 
 
@@ -21,6 +22,7 @@ app.use(cors({
 }))
 
 app.use('/api/auth', authRoute)
+app.use('/api/landlord', propertiesRouter)
 
 
 

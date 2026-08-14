@@ -2,22 +2,39 @@
 CREATE TYPE "PropertyStatus" AS ENUM ('RENTED', 'AVAILABLE');
 
 -- CreateEnum
+CREATE TYPE "PropertyType" AS ENUM ('FLAT', 'APARTMENT', 'House', 'PLOT');
+
+-- CreateEnum
 CREATE TYPE "Role" AS ENUM ('Tenant', 'Landlord', 'Admin');
 
 -- CreateEnum
 CREATE TYPE "UserStatus" AS ENUM ('ACTIVE', 'BANNED');
 
 -- CreateTable
-CREATE TABLE "Properties" (
+CREATE TABLE "Category" (
     "id" TEXT NOT NULL,
-    "details" TEXT NOT NULL,
-    "rent" TEXT NOT NULL,
-    "status" "PropertyStatus" NOT NULL DEFAULT 'AVAILABLE',
-    "landlordId" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Properties_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "properties" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "details" TEXT NOT NULL,
+    "rent" DECIMAL(65,30) NOT NULL,
+    "type" "PropertyType" NOT NULL,
+    "status" "PropertyStatus" NOT NULL DEFAULT 'AVAILABLE',
+    "landlordId" TEXT NOT NULL,
+    "categoryId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "properties_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -35,10 +52,10 @@ CREATE TABLE "users" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Properties_landlordId_key" ON "Properties"("landlordId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- AddForeignKey
-ALTER TABLE "Properties" ADD CONSTRAINT "Properties_landlordId_fkey" FOREIGN KEY ("landlordId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "properties" ADD CONSTRAINT "properties_landlordId_fkey" FOREIGN KEY ("landlordId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "properties" ADD CONSTRAINT "properties_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

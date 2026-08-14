@@ -17,6 +17,16 @@ export const PropertyStatus = {
 export type PropertyStatus = (typeof PropertyStatus)[keyof typeof PropertyStatus]
 
 
+export const PropertyType = {
+  FLAT: 'FLAT',
+  APARTMENT: 'APARTMENT',
+  House: 'House',
+  PLOT: 'PLOT'
+} as const
+
+export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType]
+
+
 export const Role = {
   Tenant: 'Tenant',
   Landlord: 'Landlord',
