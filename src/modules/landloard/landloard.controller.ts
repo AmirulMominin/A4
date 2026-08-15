@@ -73,7 +73,7 @@ const requestProcess = catchAsync(async(req, res, next)=>{
     const id = req.params.id
     const lid = req.user?.id
 
-    if(!["ACCEPTED", "REJECTED"].includes(status)){
+    if(!["APPROVE", "REJECT"].includes(status)){
         throw new Error("Invalid status input.")
     }
 

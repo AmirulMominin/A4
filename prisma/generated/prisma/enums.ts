@@ -9,6 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
+export const PaymentStatus = {
+  PAID: 'PAID',
+  PENDING: 'PENDING',
+  CANCEL: 'CANCEL'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
 export const PropertyStatus = {
   RENTED: 'RENTED',
   AVAILABLE: 'AVAILABLE'
@@ -29,8 +38,8 @@ export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType]
 
 export const RentalStatus = {
   PENDING: 'PENDING',
-  REJECTED: 'REJECTED',
-  ACCEPTED: 'ACCEPTED',
+  REJECT: 'REJECT',
+  APPROVE: 'APPROVE',
   ACTIVE: 'ACTIVE'
 } as const
 

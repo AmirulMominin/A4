@@ -13,6 +13,7 @@ model Properties {
     category Category @relation(fields: [categoryId], references: [id])
     
     rental Rental[]
+    review Review[]
 
 
     createdAt DateTime @default(now())

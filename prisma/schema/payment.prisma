@@ -1,0 +1,16 @@
+model Payment{
+    id String @id @default(ulid())
+    rentalId String
+    paymentStatus PaymentStatus @default(PAID)
+
+    rental Rental @relation(fields: [rentalId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum PaymentStatus {
+    PAID
+    PENDING
+    CANCEL
+}

@@ -23,6 +23,11 @@ export * from './enums';
  */
 export type Category = Prisma.CategoryModel
 /**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
  * Model Properties
  * 
  */
@@ -32,6 +37,11 @@ export type Properties = Prisma.PropertiesModel
  * 
  */
 export type Rental = Prisma.RentalModel
+/**
+ * Model Review
+ * 
+ */
+export type Review = Prisma.ReviewModel
 /**
  * Model User
  * 

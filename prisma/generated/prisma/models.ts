@@ -9,7 +9,9 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Category'
+export type * from './models/Payment'
 export type * from './models/Properties'
 export type * from './models/Rental'
+export type * from './models/Review'
 export type * from './models/User'
 export type * from './commonInputTypes'
