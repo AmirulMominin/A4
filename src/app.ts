@@ -7,6 +7,7 @@ import { authRoute } from "./modules/auth/auth.route"
 import { landloardRoute } from "./modules/landloard/landloard.route"
 import { propertiesRoute } from "./modules/properties/properties.route"
 import { rentalRoute } from "./modules/rental/rental.route"
+import { paymentRoute } from "./modules/payment/payment.route"
 
 
 
@@ -28,6 +29,7 @@ app.use('/api/auth', authRoute)
 app.use('/api/landlord', landloardRoute)
 app.use('/api/properties', propertiesRoute)
 app.use('/api/rentals', rentalRoute)
+app.use('/api/payments', paymentRoute)
 
 
 
