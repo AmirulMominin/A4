@@ -22,6 +22,11 @@ const createPayment = catchAsync(async(req,res, next)=>{
     })
 })
 
+const webhook = catchAsync(async(req, res, next)=>{
+
+})
+
 export const paymentController = {
-    createPayment
+    createPayment,
+    webhook
 }

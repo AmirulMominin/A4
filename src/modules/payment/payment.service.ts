@@ -57,8 +57,13 @@ const createPayment = async(uid: string, rid: string)=>{
 
 }
 
+const webhook = async()=>{
+
+}
+
 
 
 export const paymentService = {
-    createPayment
+    createPayment,
+    webhook
 }
