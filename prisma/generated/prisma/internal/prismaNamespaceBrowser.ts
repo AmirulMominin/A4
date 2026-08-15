@@ -89,6 +89,7 @@ export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typ
 export const PaymentScalarFieldEnum = {
   id: 'id',
   rentalId: 'rentalId',
+  transactionId: 'transactionId',
   paymentStatus: 'paymentStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

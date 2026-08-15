@@ -9,5 +9,6 @@ export default  {
     app_url: process.env.APP_URL,
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET!,
     accessExpire: process.env.JWT_ACCESS_EXPIRES_IN!,
-    stripe_key: process.env.STRIPE_API_KEY!
+    stripe_key: process.env.STRIPE_API_KEY!,
+    stripe_webhook: process.env.STRIPE_WEBHOOK_SECRET!
 }

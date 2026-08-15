@@ -29,7 +29,7 @@ const createPayment = async(uid: string, rid: string)=>{
                     name: rental.property.name,
                     description: rental.property.details 
                 },
-                unit_amount: Math.round(rental.property.rent.toNumber() * 1000)
+                unit_amount: Math.round(rental.property.rent.toNumber() * 100)
             },
             quantity: 1
         }],
@@ -39,6 +39,13 @@ const createPayment = async(uid: string, rid: string)=>{
             rentalId: rid,
             tenantId: rental.tenantId
         },
+         payment_intent_data: {
+        metadata: {
+            rentalId: rental.id,
+            tenantId: rental.tenantId,
+        },
+    },
+
         success_url: "http://localhost/3000/success",
         cancel_url: "http://localhost/3000/cancel"
     })
