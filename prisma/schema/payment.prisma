@@ -1,6 +1,7 @@
 model Payment{
     id String @id @default(ulid())
     rentalId String
+    amount Int
     transactionId String @unique
     paymentStatus PaymentStatus @default(PAID)
 

@@ -5,7 +5,7 @@ model User{
     password String
     role Role 
     status UserStatus @default(ACTIVE)
-
+    stripeCustomerId String? @unique
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
