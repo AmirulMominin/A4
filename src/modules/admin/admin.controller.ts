@@ -26,14 +26,29 @@ const getAllRentalRequest = catchAsync(async(req, res, next)=>{
     const rentalRequest = await adminService.getAllRentalRequest()
     sendResponse(res, {
         success: true,
-        statsCode: 200,
+        statusCode: 200,
         message: "Here is all the rental request",
         data: rentalRequest
     })
 })
 
+const updateUserStatus = catchAsync(async(req, res, next)=>{
+    const id = req.params.id
+    const status = req.body.status
+
+    const result = await adminService.updateUserStatus(id as string, status as string)
+    sendResponse(res, {
+        success: true,
+        statusCode: 200,
+        message: "Status updated",
+        data: result
+    })
+
+})
+
 export const adminController = {
     getAllUser,
     getAllProperties,
-    getAllRentalRequest
+    getAllRentalRequest,
+    updateUserStatus
 }
