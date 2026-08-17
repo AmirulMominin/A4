@@ -117,9 +117,19 @@ const webhook = async(payLoad:Buffer, signature: string)=>{
             
         }
       })
-      console.log("line 116")
+      if(result){
+        await prisma.rental.update({
+            where:{
+                id: rentalId
+            },
+            data:{
+                rentalStatus: "ACTIVE"
+            }
+        })
+      }
+    //   console.log("line 116")
 
-      console.log("line number 117",result)
+    //   console.log("line number 117",result)
       
       // Then define and call a method to handle the successful payment intent.
       // handlePaymentIntentSucceeded(paymentIntent);
