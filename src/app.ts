@@ -1,4 +1,4 @@
-import express from "express"
+import express, { NextFunction, Request, Response } from "express"
 import { json } from "node:stream/consumers"
 import cors from "cors"
 import cookieParser from "cookie-parser"
@@ -11,6 +11,8 @@ import { paymentRoute } from "./modules/payment/payment.route"
 import { stripe } from "./lib/stripe"
 import { reviewRoute } from "./modules/review/review.route"
 import { adminRoute } from "./modules/admin/admin.route"
+import httpstatus from "http-status"
+import { globalError } from "./middleware/globalError"
 
 const app = express()
 
@@ -36,6 +38,14 @@ app.use('/api/payments', paymentRoute)
 app.use('/api/review', reviewRoute)
 app.use('/api/admin',adminRoute)
 
+app.use((req,res)=>{
+    res.status(404).json({
+        message: "Route not found!",
+        path: req.originalUrl
+    })
+})
+
+app.use(globalError)
 
 
 
