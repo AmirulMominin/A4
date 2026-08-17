@@ -1,6 +1,8 @@
+import Stripe from "stripe"
 import config from "../../config"
 import { prisma } from "../../lib/prisma"
 import { stripe } from "../../lib/stripe"
+
 
 const createPayment = async(uid: string, rid: string)=>{
 
@@ -28,17 +30,25 @@ const createPayment = async(uid: string, rid: string)=>{
             id:uid
         }
     })
-    let stripeCustomerId = user?.stripeCustomerId
+    // let stripeCustomerId = user?.stripeCustomerId
 
-    if(!stripeCustomerId){
-        const customer =  await stripe.customers.create({
-            name: user?.name,
-            email: user?.email,
-            metadata: {userId : user?.id as string}
+    // if(!stripeCustomerId){
+    //     const customer =  await stripe.customers.create({
+    //         name: user?.name,
+    //         email: user?.email,
+    //         metadata: {userId : user?.id as string}
 
-        })
-        stripeCustomerId = customer.id
-    }
+    //     })
+    //     stripeCustomerId = customer.id
+        // await prisma.user.update({
+        //     where:{
+        //         id: uid
+        //     },
+        //     data:{
+        //         stripeCustomerId: uid
+        //     }
+        // })
+    // }
 
     const session = await stripe.checkout.sessions.create({
         line_items:[{
@@ -52,7 +62,7 @@ const createPayment = async(uid: string, rid: string)=>{
             },
             quantity: 1
         }],
-        customer: stripeCustomerId,
+        
         mode: "payment",
         payment_method_types: ["card"],
         metadata: {
@@ -83,10 +93,34 @@ const webhook = async(payLoad:Buffer, signature: string)=>{
         signature,
         config.stripe_webhook
       );
-      console.log(event)
     switch (event.type) {
     case 'checkout.session.completed':
-      console.log(event.data.object)
+      console.log("line 98",event.data.object)
+      const session = event.data.object
+
+      const userId = session.metadata?.tenantId as string
+
+      console.log("103",userId)
+      const rentalId = session.metadata?.rentalId as string
+      const customerId = session.customer
+        // if(session.amount_total === null){
+        //     throw new Error("You amount is 0")
+        // }
+    //   const amount = session.amount_total / 100
+      
+      const result = await prisma.payment.create({
+        data:{
+            amount: Number(session.amount_total) / 100,
+            userId: userId,
+            rentalId: rentalId,
+            paymentStatus: "PAID"
+            
+        }
+      })
+      console.log("line 116")
+
+      console.log("line number 117",result)
+      
       // Then define and call a method to handle the successful payment intent.
       // handlePaymentIntentSucceeded(paymentIntent);
       break;
@@ -108,9 +142,50 @@ const webhook = async(payLoad:Buffer, signature: string)=>{
    
 }
 
+const allPayments = async(uid: string)=>{
+    const get = await prisma.payment.findMany({
+        where:{
+            id: uid
+        },
+        include:{
+            rental: true,
+            
+        }
+    })
+
+    return get
+}
+
+const getPaymentDetails = async(id : string)=>{
+    const paymentDetails = await prisma.payment.findUnique({
+        where:{
+            id
+        },
+        include:{
+            rental: {
+                include:{
+                    property: true,
+                    tenant: {
+                        omit:{
+                            password: true
+                        }
+                    }
+                }
+            }
+        }
+    })
+    if(!paymentDetails){
+        throw new Error("Can not find the data")
+    }
+    
+    return paymentDetails
+}
+
 
 
 export const paymentService = {
     createPayment,
-    webhook
+    webhook,
+    allPayments,
+    getPaymentDetails
 }

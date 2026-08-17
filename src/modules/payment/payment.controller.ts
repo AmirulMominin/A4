@@ -36,7 +36,37 @@ const webhook = catchAsync(async(req, res, next)=>{
     })
 })
 
+
+const payment = catchAsync(async(req, res, next)=>{
+    const uid= req.user?.id
+
+    const allPayments = await paymentService.allPayments(uid as string)
+    sendResponse(res, {
+        success: true,
+        message: "Here is all the payment history",
+        statusCode: 200,
+        data: allPayments
+    })
+})
+
+const getPaymentDetails = catchAsync(async(req, res, next)=>{
+    const id = req.params?.id
+    console.log(id)
+
+    const details = await paymentService.getPaymentDetails(id as string)
+
+    sendResponse(res,{
+        success: true,
+        message: "Detail for the payment",
+        statusCode: 200,
+        data: details
+    })
+})
+
+
 export const paymentController = {
     createPayment,
-    webhook
+    webhook,
+    payment,
+    getPaymentDetails
 }

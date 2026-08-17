@@ -1,8 +1,8 @@
 model Payment{
     id String @id @default(ulid())
     rentalId String
+    userId String
     amount Int
-    transactionId String @unique
     paymentStatus PaymentStatus @default(PAID)
 
     rental Rental @relation(fields: [rentalId], references: [id])
