@@ -81,7 +81,7 @@ const requestProcess = catchAsync(async(req, res, next)=>{
     sendResponse(res, {
         success: true,
         statusCode: 200,
-        message: "message updated",
+        message: "Status updated Successfully",
         data: data
     })
 })

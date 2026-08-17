@@ -95,38 +95,83 @@ const webhook = async(payLoad:Buffer, signature: string)=>{
       );
     switch (event.type) {
     case 'checkout.session.completed':
-      console.log("line 98",event.data.object)
+      
       const session = event.data.object
 
       const userId = session.metadata?.tenantId as string
+        
 
-      console.log("103",userId)
       const rentalId = session.metadata?.rentalId as string
       const customerId = session.customer
-        // if(session.amount_total === null){
-        //     throw new Error("You amount is 0")
-        // }
-    //   const amount = session.amount_total / 100
-      
-      const result = await prisma.payment.create({
-        data:{
+    
+    const transiction = await prisma.$transaction(async(tx)=>{
+        const rental = await tx.rental.findUnique({
+            where:{
+                id: rentalId
+            }
+        })
+        const result = await tx.payment.create({
+            data: {
             amount: Number(session.amount_total) / 100,
             userId: userId,
             rentalId: rentalId,
             paymentStatus: "PAID"
-            
-        }
-      })
-      if(result){
-        await prisma.rental.update({
-            where:{
+            }
+        })
+
+        await tx.rental.update({
+            where: {
                 id: rentalId
             },
             data:{
-                rentalStatus: "ACTIVE"
+                rentalStatus: "ACTIVE",
+                property: {
+                    update:{
+                        status: "RENTED"
+                    }
+                }
+            },
+            include:{
+                property: true
             }
         })
-      }
+
+
+    })
+
+    //   const rental = await prisma.rental.findUnique({
+    //     where:{
+    //         id: rentalId
+    //     }
+    //   })
+      
+    //   console.log("rental line 107", rental)
+
+    //   const result = await prisma.payment.create({
+    //     data:{
+           
+    //              amount: Number(session.amount_total) / 100,
+    //         userId: userId,
+    //         rentalId: rentalId,
+    //         paymentStatus: "PAID"
+    //     }
+    //   })
+      
+    //   console.log("line 124",result)
+       
+    //   if(result){
+    //    const data =  await prisma.rental.update({
+    //         where:{
+    //             id: rentalId
+    //         },
+    //         include:{
+    //             property: true
+    //         },
+    //         data:{
+    //             rentalStatus: "ACTIVE",
+    //         }
+    //     })    
+    //   }
     //   console.log("line 116")
 
     //   console.log("line number 117",result)
