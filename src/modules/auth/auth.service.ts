@@ -12,6 +12,9 @@ const createUser = async(payLoad: IUser)=>{
             email,
             role,
             password: hashedPassword
+        },
+        omit:{
+            password: true
         }
     })
     return user

@@ -95,7 +95,6 @@ const webhook = async(payLoad:Buffer, signature: string)=>{
       );
     switch (event.type) {
     case 'checkout.session.completed':
-      
       const session = event.data.object
 
       const userId = session.metadata?.tenantId as string
